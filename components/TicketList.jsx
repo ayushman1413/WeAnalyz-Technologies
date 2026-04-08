@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import TicketCard from './TicketCard';
+import { useResponsive } from '../contexts/ResponsiveContext';
 
 const TicketList = ({ tickets, selectedTicketId, onSelectTicket }) => {
   const [filter, setFilter] = useState('all');
+  const { isMobile } = useResponsive();
 
   const filteredTickets = tickets.filter(ticket => {
     if (filter === 'all') return true;
@@ -10,9 +12,9 @@ const TicketList = ({ tickets, selectedTicketId, onSelectTicket }) => {
   });
 
   return (
-    <div className="w-full md:w-80 bg-white border-r border-slate-200 flex flex-col h-screen fixed left-16 top-16 md:relative md:top-0 md:h-auto">
-      {/* Filter Tabs */}
-      <div className="p-4 border-b border-slate-200 flex gap-2 overflow-x-auto">
+    <div className="flex flex-col h-full bg-white overflow-hidden">
+      {/* Filter Tabs - Scrollable on mobile */}
+      <div className="p-3 sm:p-4 border-b border-slate-200 flex gap-2 overflow-x-auto flex-shrink-0">
         {['all', 'open', 'in-progress', 'pending'].map(status => (
           <button
             key={status}
@@ -29,8 +31,8 @@ const TicketList = ({ tickets, selectedTicketId, onSelectTicket }) => {
       </div>
 
       {/* Ticket List */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="p-3 space-y-2">
+      <div className="flex-1 overflow-y-auto min-h-0">
+        <div className="p-2 sm:p-3 space-y-2">
           {filteredTickets.length > 0 ? (
             filteredTickets.map(ticket => (
               <TicketCard
