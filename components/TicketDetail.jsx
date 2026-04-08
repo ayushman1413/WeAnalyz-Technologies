@@ -2,102 +2,200 @@ import React, { useState } from 'react';
 import MessageTabs from './MessageTabs';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
-import { useResponsive } from '../contexts/ResponsiveContext';
 
-const TicketDetail = ({ ticket, onAddMessage, onBack }) => {
+const TICKET_TYPES = ['Task', 'Bug', 'Feature', 'Question'];
+
+const TicketDetail = ({ ticket, onAddMessage }) => {
   const [activeTab, setActiveTab] = useState('public');
-  const [messages, setMessages] = useState(ticket.messages);
-  const { isMobile } = useResponsive();
+  const [newTag, setNewTag] = useState('');
+  const [tags, setTags] = useState(ticket.tags || []);
+  const [openSections, setOpenSections] = useState({
+    tasks: false,
+    collectedFields: false,
+    linkedTickets: false,
+    history: false,
+  });
 
-  const handleSendMessage = (content) => {
+  const handleSendMessage = (text) => {
     const newMessage = {
-      id: messages.length + 1,
-      author: 'Sarah Manager',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Admin',
-      content,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      id: Date.now(),
+      author: 'Danny Amacher',
+      email: 'danny@capacity.com',
+      avatar: 'DA',
+      avatarColor: '#5B8EF0',
+      to: `${ticket.customer} <${ticket.email}>`,
+      content: text,
+      timestamp: new Date().toLocaleString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric',
+        hour: 'numeric', minute: '2-digit', hour12: true,
+      }),
       isPrivate: activeTab === 'private',
-      type: 'agent'
+      type: 'agent',
+      attachments: [],
     };
-    setMessages([...messages, newMessage]);
     onAddMessage(ticket.id, newMessage);
   };
 
-  const priorityColors = {
-    critical: 'bg-red-100 text-red-800',
-    high: 'bg-orange-100 text-orange-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    low: 'bg-green-100 text-green-800',
+  const handleAddTag = (e) => {
+    if ((e.key === 'Enter' || e.type === 'click') && newTag.trim()) {
+      setTags([...tags, newTag.trim()]);
+      setNewTag('');
+    }
   };
 
-  const statusColors = {
-    open: 'bg-blue-100 text-blue-800',
-    'in-progress': 'bg-purple-100 text-purple-800',
-    pending: 'bg-yellow-100 text-yellow-800',
+  const handleRemoveTag = (idx) => {
+    setTags(tags.filter((_, i) => i !== idx));
   };
 
-  const publicCount = messages.filter(m => !m.isPrivate).length;
-  const privateCount = messages.filter(m => m.isPrivate).length;
+  const toggleSection = (section) => {
+    setOpenSections(s => ({ ...s, [section]: !s[section] }));
+  };
 
   return (
-    <div className="flex flex-col bg-white h-full overflow-hidden">
-      <div className="border-b border-slate-200 p-4 sm:p-6 bg-white flex-shrink-0 max-h-52 overflow-y-auto">
-        <div className="flex items-start justify-between gap-2 mb-4">
-          {isMobile && onBack && (
-            <button
-              onClick={onBack}
-              className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition flex-shrink-0"
-              title="Back"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    <div className="ticket-detail">
+      {/* Main conversation area */}
+      <div className="ticket-detail-main">
+        {/* Ticket title bar */}
+        <div className="ticket-detail-titlebar">
+          <div className="ticket-detail-title-left">
+            <h2 className="ticket-detail-title">{ticket.title}</h2>
+            <span className="ticket-detail-id">{ticket.ticketId}</span>
+          </div>
+          <div className="ticket-detail-title-actions">
+            <button className="ticket-action-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
               </svg>
             </button>
-          )}
-
-          <div className="flex-1 min-w-0">
-            <h2 className="text-lg sm:text-2xl font-bold text-slate-900 mb-2 truncate">{ticket.title}</h2>
-            <p className="text-xs sm:text-sm text-slate-600">Ticket ID: #{ticket.id}</p>
-          </div>
-
-          <div className="flex gap-2 flex-wrap justify-end flex-shrink-0">
-            <button className="px-3 sm:px-4 py-2 bg-slate-100 text-slate-900 rounded-lg font-medium text-xs sm:text-sm hover:bg-slate-200 transition whitespace-nowrap">
-              Assign
-            </button>
-            <button className="px-3 sm:px-4 py-2 bg-blue-500 text-white rounded-lg font-medium text-xs sm:text-sm hover:bg-blue-600 transition whitespace-nowrap">
-              Resolve
+            <button className="ticket-action-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>
+              </svg>
             </button>
           </div>
         </div>
 
-        <div className="flex items-center gap-3 py-2 sm:py-4 border-t border-b border-slate-200">
-          <img
-            src={ticket.avatar}
-            alt={ticket.customer}
-            className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex-shrink-0"
+        {/* Messages */}
+        <div className="ticket-detail-messages">
+          <MessageList messages={ticket.messages} activeTab={activeTab} />
+        </div>
+
+        {/* Reply area */}
+        <div className="ticket-detail-reply">
+          <MessageTabs activeTab={activeTab} onTabChange={setActiveTab} />
+          <MessageInput
+            onSendMessage={handleSendMessage}
+            isPrivate={activeTab === 'private'}
           />
-          <div className="flex-1 min-w-0">
-            <p className="font-semibold text-slate-900 text-sm truncate">{ticket.customer}</p>
-            <p className="text-xs text-slate-600 truncate">{ticket.email}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 mt-2 sm:mt-4 flex-wrap">
-          <span className={`text-xs font-medium px-2 sm:px-3 py-1 rounded-full ${statusColors[ticket.status] || statusColors.open}`}>
-            {ticket.status.replace('-', ' ')}
-          </span>
-          <span className={`text-xs font-medium px-2 sm:px-3 py-1 rounded-full ${priorityColors[ticket.priority] || priorityColors.low}`}>
-            {ticket.priority} priority
-          </span>
-          <span className="text-xs bg-slate-100 text-slate-700 px-2 sm:px-3 py-1 rounded-full">
-            Created {ticket.createdAt}
-          </span>
         </div>
       </div>
 
-      <MessageTabs activeTab={activeTab} onTabChange={setActiveTab} publicCount={publicCount} privateCount={privateCount} />
-      <MessageList messages={messages} activeTab={activeTab} />
-      <MessageInput onSendMessage={handleSendMessage} isPrivate={activeTab === 'private'} />
+      {/* Right properties panel */}
+      <div className="ticket-detail-sidebar">
+        {/* Ticket Type */}
+        <div className="props-section">
+          <label className="props-label">Ticket Type</label>
+          <div className="props-select">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5B8EF0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 11l3 3L22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+            <span className="props-select-value">{ticket.ticketType}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="props-chevron">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* Due Date */}
+        <div className="props-section">
+          <label className="props-label">Due Date</label>
+          <div className="props-select">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span className="props-select-value props-select-placeholder">mm/dd/yyyy</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="props-chevron">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* Reporter */}
+        <div className="props-section">
+          <label className="props-label">Reporter</label>
+          <div className="props-select">
+            <div className="props-reporter-avatar" style={{ backgroundColor: ticket.reporterColor }}>
+              {ticket.reporterAvatar}
+            </div>
+            <span className="props-select-value">{ticket.reporter}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="props-chevron">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* Tags */}
+        <div className="props-section">
+          <label className="props-label">Tags</label>
+          <div className="props-tags">
+            {tags.map((tag, idx) => (
+              <span key={idx} className="props-tag">
+                {tag}
+                <button className="props-tag-remove" onClick={() => handleRemoveTag(idx)}>×</button>
+              </span>
+            ))}
+            <div className="props-tag-add">
+              <input
+                type="text"
+                className="props-tag-input"
+                placeholder="Add Tag +"
+                value={newTag}
+                onChange={e => setNewTag(e.target.value)}
+                onKeyDown={handleAddTag}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="props-divider" />
+
+        {/* Accordion sections */}
+        {[
+          { key: 'tasks', label: 'TASKS', count: null },
+          { key: 'collectedFields', label: 'COLLECTED FIELDS', count: null },
+          { key: 'linkedTickets', label: 'LINKED TICKETS', count: 2 },
+          { key: 'history', label: 'HISTORY', count: null },
+        ].map(({ key, label, count }) => (
+          <div key={key} className="props-accordion">
+            <button
+              className="props-accordion-header"
+              onClick={() => toggleSection(key)}
+            >
+              <div className="props-accordion-title">
+                <span>{label}</span>
+                {count !== null && <span className="props-accordion-count">{count}</span>}
+              </div>
+              <svg
+                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={`props-accordion-chevron ${openSections[key] ? 'props-accordion-chevron--open' : ''}`}
+              >
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </button>
+            {openSections[key] && (
+              <div className="props-accordion-content">
+                <p className="props-accordion-empty">No {label.toLowerCase()} found.</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

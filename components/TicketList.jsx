@@ -2,48 +2,47 @@ import React, { useState } from 'react';
 import TicketCard from './TicketCard';
 
 const TicketList = ({ tickets, selectedTicketId, onSelectTicket }) => {
-  const [filter, setFilter] = useState('all');
+  const [filterStatus, setFilterStatus] = useState('all');
 
-  const filteredTickets = tickets.filter(ticket => {
-    if (filter === 'all') return true;
-    return ticket.status === filter;
-  });
+  const filteredTickets = filterStatus === 'all'
+    ? tickets
+    : tickets.filter(t => t.status === filterStatus);
 
   return (
-    <div className="flex flex-col h-full bg-white overflow-hidden">
-      <div className="p-3 sm:p-4 border-b border-slate-200 flex gap-2 overflow-x-auto flex-shrink-0">
-        {['all', 'open', 'in-progress', 'pending'].map(status => (
-          <button
-            key={status}
-            onClick={() => setFilter(status)}
-            className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition ${
-              filter === status
-                ? 'bg-blue-500 text-white'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-            }`}
-          >
-            {status === 'all' ? 'All' : status.replace('-', ' ')}
-          </button>
-        ))}
+    <div className="ticket-list">
+      <div className="ticket-list-header">
+        <div className="ticket-list-filters">
+          {[
+            { key: 'all', label: 'All' },
+            { key: 'todo', label: 'To Do' },
+            { key: 'done', label: 'Done' },
+          ].map(f => (
+            <button
+              key={f.key}
+              className={`ticket-list-filter-btn ${filterStatus === f.key ? 'ticket-list-filter-btn--active' : ''}`}
+              onClick={() => setFilterStatus(f.key)}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+        <button className="ticket-list-add-btn" title="New Ticket">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto min-h-0">
-        <div className="p-2 sm:p-3 space-y-2">
-          {filteredTickets.length > 0 ? (
-            filteredTickets.map(ticket => (
-              <TicketCard
-                key={ticket.id}
-                ticket={ticket}
-                isSelected={selectedTicketId === ticket.id}
-                onClick={() => onSelectTicket(ticket.id)}
-              />
-            ))
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-sm text-slate-500">No tickets found</p>
-            </div>
-          )}
-        </div>
+      <div className="ticket-list-items">
+        {filteredTickets.map(ticket => (
+          <TicketCard
+            key={ticket.id}
+            ticket={ticket}
+            isSelected={ticket.id === selectedTicketId}
+            onSelect={onSelectTicket}
+          />
+        ))}
       </div>
     </div>
   );

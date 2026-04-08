@@ -3,28 +3,16 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import TicketList from './TicketList';
 import TicketDetail from './TicketDetail';
-import { ResponsiveProvider, useResponsive } from '../contexts/ResponsiveContext';
 import { ticketsData } from '../data/tickets';
 
-const AppContent = () => {
+const App = () => {
   const [selectedTicketId, setSelectedTicketId] = useState(1);
   const [tickets, setTickets] = useState(ticketsData);
-  const [showDetail, setShowDetail] = useState(true);
-  const { isMobile, isDesktop } = useResponsive();
 
   const selectedTicket = tickets.find(t => t.id === selectedTicketId);
 
   const handleSelectTicket = (ticketId) => {
     setSelectedTicketId(ticketId);
-    if (isMobile) {
-      setShowDetail(true);
-    }
-  };
-
-  const handleBackFromDetail = () => {
-    if (isMobile) {
-      setShowDetail(false);
-    }
   };
 
   const handleAddMessage = (ticketId, newMessage) => {
@@ -36,49 +24,39 @@ const AppContent = () => {
   };
 
   return (
-    <div className="flex h-screen bg-slate-100 overflow-hidden">
+    <div className="app-root">
       <Sidebar />
-
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="app-main">
         <Header ticketCount={tickets.length} />
-
-        <div className="flex flex-1 min-h-0 pt-16">
-          {!showDetail && (
-            <div className={`${isMobile ? 'w-full' : isDesktop ? 'w-80' : 'w-72'} border-r border-slate-200 bg-white overflow-hidden flex flex-col`}>
-              <TicketList
-                tickets={tickets}
-                selectedTicketId={selectedTicketId}
-                onSelectTicket={handleSelectTicket}
-              />
-            </div>
-          )}
-
-          {selectedTicket && (showDetail || isDesktop) && (
-            <div className={`${isMobile && !showDetail ? 'hidden' : 'flex'} flex-1 flex-col min-w-0 overflow-hidden`}>
+        <div className="app-body">
+          <div className="app-ticket-list">
+            <TicketList
+              tickets={tickets}
+              selectedTicketId={selectedTicketId}
+              onSelectTicket={handleSelectTicket}
+            />
+          </div>
+          <div className="app-ticket-detail">
+            {selectedTicket ? (
               <TicketDetail
                 ticket={selectedTicket}
                 onAddMessage={handleAddMessage}
-                onBack={handleBackFromDetail}
               />
-            </div>
-          )}
-
-          {!selectedTicket && (
-            <div className="flex-1 flex items-center justify-center bg-slate-50">
-              <p className="text-slate-500">Select a ticket to view details</p>
-            </div>
-          )}
+            ) : (
+              <div className="app-empty-state">
+                <div className="app-empty-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </div>
+                <h3>Select a ticket</h3>
+                <p>Choose a ticket from the list to view its details</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
-  );
-};
-
-const App = () => {
-  return (
-    <ResponsiveProvider>
-      <AppContent />
-    </ResponsiveProvider>
   );
 };
 

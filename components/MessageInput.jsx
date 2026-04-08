@@ -1,58 +1,106 @@
 import React, { useState } from 'react';
 
 const MessageInput = ({ onSendMessage, isPrivate }) => {
-  const [message, setMessage] = useState('');
+  const [text, setText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (message.trim()) {
-      onSendMessage(message);
-      setMessage('');
-    }
+    if (!text.trim()) return;
+    onSendMessage(text.trim());
+    setText('');
+  };
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+    setIsTyping(e.target.value.length > 0);
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="p-3 sm:p-4 bg-white border-t border-slate-200 space-y-3 flex-shrink-0"
-    >
-      <textarea
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder={isPrivate ? "Add a private note..." : "Type a message..."}
-        className="w-full p-2 sm:p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-        rows="3"
-      />
-      <div className="flex items-center justify-between gap-2 flex-wrap">
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition flex-shrink-0"
-            title="Attach file"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+    <div className={`message-input-wrapper ${isPrivate ? 'message-input-wrapper--private' : ''}`}>
+      {isTyping && (
+        <div className="typing-indicator">
+          <span className="typing-dot" />
+          <span className="typing-dot" />
+          <span className="typing-dot" />
+          <span className="typing-text">You are typing...</span>
+        </div>
+      )}
+      <form onSubmit={handleSubmit} className="message-input-form">
+        <div className="message-input-toolbar">
+          <button type="button" className="toolbar-btn" title="Bold">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
+              <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/>
             </svg>
           </button>
-          <button
-            type="button"
-            className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition flex-shrink-0"
-            title="Add emoji"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9 9h.01M15 9h.01" />
+          <button type="button" className="toolbar-btn" title="Italic">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="4" x2="10" y2="4"/>
+              <line x1="14" y1="20" x2="5" y2="20"/>
+              <line x1="15" y1="4" x2="9" y2="20"/>
+            </svg>
+          </button>
+          <button type="button" className="toolbar-btn" title="Link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </button>
+          <div className="toolbar-divider" />
+          <button type="button" className="toolbar-btn" title="List">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="8" y1="6" x2="21" y2="6"/>
+              <line x1="8" y1="12" x2="21" y2="12"/>
+              <line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/>
+              <line x1="3" y1="12" x2="3.01" y2="12"/>
+              <line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+          </button>
+          <button type="button" className="toolbar-btn" title="Mention">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/>
+            </svg>
+          </button>
+          <button type="button" className="toolbar-btn" title="Attachment">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
             </svg>
           </button>
         </div>
-        <button
-          type="submit"
-          disabled={!message.trim()}
-          className="px-3 sm:px-4 py-2 bg-blue-500 text-white rounded-lg font-medium text-xs sm:text-sm hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex-shrink-0"
-        >
-          Send
-        </button>
-      </div>
-    </form>
+
+        <textarea
+          className="message-input-field"
+          placeholder={isPrivate ? 'Add a private note...' : 'Type your reply...'}
+          value={text}
+          onChange={handleChange}
+          rows={3}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+              handleSubmit(e);
+            }
+          }}
+        />
+
+        <div className="message-input-footer">
+          <div className="message-input-hints">
+            <span className="input-hint">Press ⌘+Enter to send</span>
+          </div>
+          <div className="message-input-actions">
+            <button type="button" className="btn-secondary-sm">Discard</button>
+            <button type="submit" className="btn-primary-sm" disabled={!text.trim()}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              {isPrivate ? 'Add Note' : 'Send Reply'}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
 
