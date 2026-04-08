@@ -14,20 +14,20 @@ const MessageInput = ({ onSendMessage, isPrivate }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 bg-white border-t border-slate-200 space-y-3"
+      className="p-3 sm:p-4 bg-white border-t border-slate-200 space-y-3 flex-shrink-0"
     >
       <textarea
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder={isPrivate ? "Add a private note..." : "Type a message..."}
-        className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+        className="w-full p-2 sm:p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs sm:text-sm text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
         rows="3"
       />
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2">
           <button
             type="button"
-            className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition"
+            className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition flex-shrink-0"
             title="Attach file"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,7 +36,7 @@ const MessageInput = ({ onSendMessage, isPrivate }) => {
           </button>
           <button
             type="button"
-            className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition"
+            className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition flex-shrink-0"
             title="Add emoji"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@ const MessageInput = ({ onSendMessage, isPrivate }) => {
         <button
           type="submit"
           disabled={!message.trim()}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg font-medium text-sm hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-3 sm:px-4 py-2 bg-blue-500 text-white rounded-lg font-medium text-xs sm:text-sm hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex-shrink-0"
         >
           Send
         </button>

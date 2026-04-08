@@ -3,28 +3,25 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const ResponsiveContext = createContext();
 
 export const ResponsiveProvider = ({ children }) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [isTablet, setIsTablet] = useState(window.innerWidth >= 768 && window.innerWidth < 1024);
-  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 1024);
+  const [screenWidth, setScreenWidth] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth;
+    }
+    return 1024;
+  });
 
   useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < 768);
-      setIsTablet(width >= 768 && width < 1024);
-      
-      // Auto close sidebar on mobile/tablet
-      if (width < 1024) {
-        setSidebarOpen(false);
-      }
-    };
-
+    const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const isMobile = screenWidth < 768;
+  const isTablet = screenWidth >= 768 && screenWidth < 1024;
+  const isDesktop = screenWidth >= 1024;
+
   return (
-    <ResponsiveContext.Provider value={{ isMobile, isTablet, sidebarOpen, setSidebarOpen }}>
+    <ResponsiveContext.Provider value={{ isMobile, isTablet, isDesktop, screenWidth }}>
       {children}
     </ResponsiveContext.Provider>
   );
