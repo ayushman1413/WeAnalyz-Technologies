@@ -18,7 +18,6 @@ const MessageInput = ({ onSendMessage, isPrivate }) => {
   const handleChange = e => {
     setText(e.target.value);
     setIsTyping(e.target.value.length > 0);
-    // Auto-resize textarea
     const ta = textareaRef.current;
     if (ta) {
       ta.style.height = 'auto';
@@ -66,7 +65,6 @@ const MessageInput = ({ onSendMessage, isPrivate }) => {
       )}
 
       <form onSubmit={handleSubmit} className="message-input-form">
-        {/* Toolbar */}
         <div className="message-input-toolbar">
           <button type="button" className="toolbar-btn" title="Bold (⌘B)" onClick={() => insertFormatting('**', '**')}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -108,7 +106,6 @@ const MessageInput = ({ onSendMessage, isPrivate }) => {
           </button>
         </div>
 
-        {/* Textarea */}
         <textarea
           ref={textareaRef}
           className="message-input-field"
@@ -119,7 +116,6 @@ const MessageInput = ({ onSendMessage, isPrivate }) => {
           rows={3}
         />
 
-        {/* Footer */}
         <div className="message-input-footer">
           <span className="input-hint">⌘+Enter to send</span>
           <div className="message-input-actions">

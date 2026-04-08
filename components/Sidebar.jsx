@@ -73,12 +73,10 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
 
   return (
     <>
-      {/* Desktop sidebar */}
       <aside className="sidebar sidebar-desktop">
         <SidebarContent activeItem={activeItem} onSetActive={setActiveItem} />
       </aside>
 
-      {/* Mobile sidebar (drawer) */}
       <aside className={`sidebar sidebar-mobile ${sidebarOpen ? 'sidebar-mobile--open' : ''}`}>
         <div className="sidebar-mobile-header">
           <span className="sidebar-mobile-title">Navigation</span>
@@ -129,8 +127,8 @@ const SidebarContent = ({ activeItem, onSetActive, mobile }) => (
         </svg>
         {mobile && <span className="sidebar-nav-label">Settings</span>}
       </button>
-      <div className="sidebar-user-avatar" title="Danny Amacher">
-        DA
+      <div className="sidebar-user-avatar" title="Priya Sharma">
+        PS
       </div>
     </div>
   </>

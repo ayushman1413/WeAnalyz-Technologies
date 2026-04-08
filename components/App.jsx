@@ -7,29 +7,22 @@ import InviteModal from './InviteModal';
 import { ticketsData } from '../data/tickets';
 
 const App = () => {
-  // Core state
   const [selectedTicketId, setSelectedTicketId] = useState(1);
   const [tickets, setTickets] = useState(ticketsData);
 
-  // Mobile view state: 'list' | 'detail'
   const [mobileView, setMobileView] = useState('list');
 
-  // Sidebar open/close for mobile
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Search & filter state (lifted to top so Header can control it)
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortOrder, setSortOrder] = useState('newest');
 
-  // Invite modal
   const [showInvite, setShowInvite] = useState(false);
 
-  // Derived: filtered + sorted tickets
   const filteredTickets = useMemo(() => {
     let result = tickets;
 
-    // Text search
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       result = result.filter(
@@ -41,12 +34,10 @@ const App = () => {
       );
     }
 
-    // Status filter
     if (filterStatus !== 'all') {
       result = result.filter(t => t.status === filterStatus);
     }
 
-    // Sort
     if (sortOrder === 'newest') {
       result = [...result].sort((a, b) => b.id - a.id);
     } else if (sortOrder === 'oldest') {
@@ -96,7 +87,6 @@ const App = () => {
 
   return (
     <div className="app-root">
-      {/* Mobile overlay */}
       {sidebarOpen && (
         <div className="mobile-overlay" onClick={() => setSidebarOpen(false)} />
       )}
@@ -120,7 +110,6 @@ const App = () => {
         />
 
         <div className="app-body">
-          {/* Ticket list — hidden on mobile when viewing detail */}
           <div className={`app-ticket-list ${mobileView === 'detail' ? 'mobile-hidden' : ''}`}>
             <TicketList
               tickets={filteredTickets}
@@ -131,7 +120,6 @@ const App = () => {
             />
           </div>
 
-          {/* Ticket detail — hidden on mobile when viewing list */}
           <div className={`app-ticket-detail ${mobileView === 'list' ? 'mobile-hidden' : ''}`}>
             {selectedTicket ? (
               <TicketDetail

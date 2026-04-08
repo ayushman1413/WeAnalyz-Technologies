@@ -31,7 +31,6 @@ const Header = ({
   const filterRef = useRef(null);
   const sortRef = useRef(null);
 
-  // Close dropdowns on outside click
   useEffect(() => {
     const handler = e => {
       if (filterRef.current && !filterRef.current.contains(e.target)) setShowFilterMenu(false);
@@ -46,9 +45,7 @@ const Header = ({
 
   return (
     <header className="header">
-      {/* Left: hamburger + breadcrumb + search */}
       <div className="header-left">
-        {/* Hamburger for mobile */}
         <button className="header-menu-btn" onClick={onMenuToggle} aria-label="Open menu">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="3" y1="6" x2="21" y2="6"/>
@@ -93,14 +90,12 @@ const Header = ({
         </div>
       </div>
 
-      {/* Right: count + filter + sort + avatars + invite */}
       <div className="header-right">
         <div className="header-ticket-count">
           <span className="header-ticket-badge">{ticketCount}</span>
           <span className="header-ticket-label">tickets</span>
         </div>
 
-        {/* Filter dropdown */}
         <div className="header-dropdown-wrapper" ref={filterRef}>
           <button
             id="header-filter-btn"
@@ -114,15 +109,17 @@ const Header = ({
               {filterStatus !== 'all' ? activeFilter.label : 'Filter'}
             </span>
             {filterStatus !== 'all' && (
-              <button
+              <span
+                role="button"
                 className="header-btn-clear"
                 onClick={e => { e.stopPropagation(); onFilterChange('all'); }}
                 aria-label="Clear filter"
+                style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
               >
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
-              </button>
+              </span>
             )}
           </button>
           {showFilterMenu && (
@@ -146,7 +143,6 @@ const Header = ({
           )}
         </div>
 
-        {/* Sort dropdown */}
         <div className="header-dropdown-wrapper" ref={sortRef}>
           <button
             id="header-sort-btn"
@@ -181,13 +177,12 @@ const Header = ({
           )}
         </div>
 
-        {/* Avatar group */}
         <div className="header-avatar-group">
           {[
-            { initials: 'AH', color: '#E8834A', name: 'Allie Harmon' },
-            { initials: 'SJ', color: '#6C5CE7', name: 'Sarah Johnson' },
-            { initials: 'MC', color: '#00B894', name: 'Mike Chen' },
-            { initials: 'DA', color: '#5B8EF0', name: 'Danny Amacher' },
+            { initials: 'NG', color: '#E8834A', name: 'Neha Gupta' },
+            { initials: 'RM', color: '#6C5CE7', name: 'Riya Mehta' },
+            { initials: 'AP', color: '#00B894', name: 'Arjun Patel' },
+            { initials: 'PS', color: '#5B8EF0', name: 'Priya Sharma' },
           ].map((av, i) => (
             <div
               key={i}
@@ -200,7 +195,6 @@ const Header = ({
           ))}
         </div>
 
-        {/* Invite button */}
         <button id="header-invite-btn" className="header-invite-btn" onClick={onInviteClick}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="12" y1="5" x2="12" y2="19"/>

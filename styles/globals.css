@@ -2,9 +2,7 @@
 @import 'tw-animate-css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* ============================================================
-   DESIGN TOKENS
-   ============================================================ */
+
 :root {
   --color-bg: #f0f2f7;
   --color-sidebar-bg: #0f1f3d;
@@ -49,9 +47,7 @@
   --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* ============================================================
-   RESET & BASE
-   ============================================================ */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body, #root { height: 100%; overflow: hidden; }
@@ -72,9 +68,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-/* ============================================================
-   APP LAYOUT
-   ============================================================ */
+
 .app-root {
   display: flex;
   height: 100vh;
@@ -136,7 +130,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   color: #cbd5e1;
 }
 
-/* Mobile overlay */
+
 .mobile-overlay {
   position: fixed;
   inset: 0;
@@ -146,9 +140,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   animation: fadeIn 0.15s ease;
 }
 
-/* ============================================================
-   SIDEBAR — DESKTOP
-   ============================================================ */
+
 .sidebar-desktop {
   width: var(--sidebar-w);
   flex-shrink: 0;
@@ -161,7 +153,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   z-index: 10;
 }
 
-/* SIDEBAR — MOBILE DRAWER */
+
 .sidebar-mobile {
   position: fixed;
   top: 0;
@@ -225,7 +217,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   margin-left: 10px;
 }
 
-/* Mobile sidebar: logo row is horizontal */
+
 .sidebar-mobile .sidebar-logo {
   flex-direction: row;
   width: auto;
@@ -264,7 +256,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .sidebar-nav-item:hover { background: var(--color-sidebar-hover-bg); color: rgba(255,255,255,0.8); }
 .sidebar-nav-item--active { background: var(--color-sidebar-active-bg); color: var(--color-sidebar-icon-active); }
 
-/* Mobile nav item: full-width with label */
+
 .sidebar-mobile .sidebar-nav-item {
   width: 100%;
   height: 42px;
@@ -318,9 +310,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 }
 .sidebar-user-avatar:hover { opacity: 0.85; }
 
-/* ============================================================
-   HEADER
-   ============================================================ */
+
 .header {
   height: 52px;
   background: var(--color-white);
@@ -343,7 +333,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   min-width: 0;
 }
 
-/* Hamburger — hidden on desktop */
+
 .header-menu-btn {
   display: none;
   width: 34px; height: 34px;
@@ -411,7 +401,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 }
 .header-ticket-label { font-size: 12px; color: var(--color-text-muted); }
 
-/* Action buttons (Filter/Sort) */
+
 .header-action-btn {
   display: flex; align-items: center; gap: 5px;
   padding: 5px 10px;
@@ -438,7 +428,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 }
 .header-btn-clear:hover { opacity: 0.75; }
 
-/* Dropdown wrapper */
+
 .header-dropdown-wrapper { position: relative; }
 
 .header-dropdown {
@@ -481,7 +471,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .header-dropdown-item:hover { background: var(--color-bg); }
 .header-dropdown-item--active { color: var(--color-blue); font-weight: 500; }
 
-/* Avatar group */
+
 .header-avatar-group { display: flex; align-items: center; }
 .header-avatar {
   width: 26px; height: 26px;
@@ -497,7 +487,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .header-avatar:first-child { margin-left: 0; }
 .header-avatar:hover { transform: translateY(-2px); z-index: 10 !important; }
 
-/* Invite button */
+
 .header-invite-btn {
   display: flex; align-items: center; gap: 5px;
   padding: 5px 13px;
@@ -510,12 +500,10 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .header-invite-btn:hover { background: var(--color-blue-dark); transform: translateY(-1px); }
 .header-invite-btn:active { transform: translateY(0); }
 
-/* Hide text labels on very small screens */
+
 .btn-text { }
 
-/* ============================================================
-   TICKET LIST
-   ============================================================ */
+
 .ticket-list { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 
 .ticket-list-header {
@@ -556,9 +544,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   font-size: 13px;
 }
 
-/* ============================================================
-   TICKET CARD
-   ============================================================ */
+
 .ticket-card {
   padding: 11px 14px;
   border-bottom: 1px solid var(--color-border-light);
@@ -597,9 +583,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .ticket-card-id { font-size: 11px; color: var(--color-text-muted); font-weight: 500; }
 .ticket-card-status-icons { display: flex; align-items: center; gap: 6px; }
 
-/* ============================================================
-   BADGES
-   ============================================================ */
+
 .badge {
   display: inline-flex; align-items: center; gap: 3px;
   padding: 2px 8px;
@@ -628,9 +612,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   color: white; flex-shrink: 0;
 }
 
-/* ============================================================
-   TICKET DETAIL
-   ============================================================ */
+
 .ticket-detail { display: flex; height: 100%; overflow: hidden; }
 
 .ticket-detail-main {
@@ -656,7 +638,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   flex: 1; min-width: 0; flex-wrap: wrap;
 }
 
-/* Back button — visible only on mobile */
+
 .ticket-back-btn {
   display: none;
   width: 30px; height: 30px;
@@ -727,9 +709,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 
 .ticket-detail-reply { flex-shrink: 0; border-top: 1px solid var(--color-border); }
 
-/* ============================================================
-   MESSAGE LIST
-   ============================================================ */
+
 .message-list { display: flex; flex-direction: column; gap: 12px; }
 
 .message-list-empty {
@@ -813,9 +793,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .attachment-name { font-size: 11px; font-weight: 500; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .attachment-date { font-size: 10px; color: var(--color-text-muted); }
 
-/* ============================================================
-   MESSAGE TABS
-   ============================================================ */
+
 .message-tabs {
   display: flex;
   padding: 10px 14px 0;
@@ -837,9 +815,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .message-tab:hover { color: var(--color-text-secondary); background: var(--color-bg); }
 .message-tab--active { color: var(--color-blue); border-bottom-color: var(--color-blue); }
 
-/* ============================================================
-   MESSAGE INPUT
-   ============================================================ */
+
 .message-input-wrapper { background: var(--color-white); }
 .message-input-wrapper--private { background: var(--color-private-bg); }
 
@@ -945,9 +921,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 }
 .btn-danger-sm:hover { background: #b91c1c; }
 
-/* ============================================================
-   TICKET DETAIL SIDEBAR (PROPS PANEL)
-   ============================================================ */
+
 .ticket-detail-sidebar {
   width: var(--props-panel-w);
   flex-shrink: 0;
@@ -1013,7 +987,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .props-dropdown-item:hover { background: var(--color-bg); }
 .props-dropdown-item--active { color: var(--color-blue); font-weight: 500; background: var(--color-blue-light); }
 
-/* Due date */
+
 .props-date-wrapper {
   display: flex; align-items: center; gap: 8px;
   border: 1px solid var(--color-border);
@@ -1030,7 +1004,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 }
 .props-date-input::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.6; }
 
-/* Reporter */
+
 .props-reporter {
   display: flex; align-items: center; gap: 8px;
   padding: 7px 10px;
@@ -1047,7 +1021,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 }
 .props-reporter-name { font-size: 13px; color: var(--color-text-primary); font-weight: 500; }
 
-/* Tags */
+
 .props-tags { display: flex; flex-wrap: wrap; gap: 5px; }
 
 .props-tag {
@@ -1094,10 +1068,10 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 }
 .props-tag-add-btn:hover { opacity: 0.8; }
 
-/* Divider */
+
 .props-divider { height: 1px; background: var(--color-border); margin: 8px 0; }
 
-/* Accordion */
+
 .props-accordion { border-bottom: 1px solid var(--color-border-light); }
 
 .props-accordion-header {
@@ -1130,7 +1104,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 }
 .props-accordion-empty { font-size: 12px; color: var(--color-text-muted); font-style: italic; padding: 4px 0; }
 
-/* Linked tickets */
+
 .linked-tickets-list { display: flex; flex-direction: column; gap: 8px; padding: 4px 0; }
 .linked-ticket-item {
   display: flex; align-items: center; gap: 6px;
@@ -1140,16 +1114,14 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .linked-ticket-rel { color: var(--color-text-muted); font-size: 11px; }
 .linked-ticket-title { color: var(--color-text-secondary); flex: 1; }
 
-/* History */
+
 .history-list { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
 .history-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; }
 .history-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-blue); flex-shrink: 0; margin-top: 3px; }
 .history-action { color: var(--color-text-secondary); }
 .history-time { color: var(--color-text-muted); }
 
-/* ============================================================
-   MODALS
-   ============================================================ */
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1194,7 +1166,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .modal-body { font-size: 13px; color: var(--color-text-secondary); text-align: center; line-height: 1.6; margin-bottom: 20px; }
 .modal-actions { display: flex; gap: 8px; justify-content: center; }
 
-/* Invite modal */
+
 .modal-header {
   display: flex; align-items: flex-start; justify-content: space-between;
   padding: 20px 22px 16px;
@@ -1297,9 +1269,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
 .role-admin { background: var(--color-blue-light); color: var(--color-blue); }
 .role-agent { background: var(--color-badge-done-bg); color: var(--color-badge-done-text); }
 
-/* ============================================================
-   ANIMATIONS
-   ============================================================ */
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -1310,9 +1280,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ============================================================
-   RESPONSIVE — TABLET (≤ 1024px)
-   ============================================================ */
+
 @media (max-width: 1024px) {
   :root {
     --props-panel-w: 210px;
@@ -1323,18 +1291,16 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   .header-ticket-count { display: none; }
 }
 
-/* ============================================================
-   RESPONSIVE — MOBILE (≤ 768px)
-   ============================================================ */
+
 @media (max-width: 768px) {
-  /* Hide desktop sidebar, show hamburger */
+  
   .sidebar-desktop { display: none; }
   .header-menu-btn { display: flex; }
 
-  /* Stack full-width layout */
+  
   .app-body { position: relative; }
 
-  /* Both panels are full-width on mobile, toggled by class */
+  
   .app-ticket-list,
   .app-ticket-detail {
     position: absolute;
@@ -1343,7 +1309,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
     transition: opacity 0.2s, transform 0.2s;
   }
 
-  /* Hidden state */
+  
   .mobile-hidden {
     opacity: 0;
     pointer-events: none;
@@ -1354,14 +1320,14 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
     transform: translateX(16px);
   }
 
-  /* Show back button on mobile */
+  
   .ticket-back-btn { display: flex; }
 
-  /* Hide props panel on mobile, use full width for conversation */
+  
   .ticket-detail-sidebar { display: none; }
   .ticket-detail-main { border-right: none; }
 
-  /* Header */
+  
   .header { padding: 0 12px; gap: 8px; }
   .header-breadcrumb { display: none; }
   .header-search { max-width: none; }
@@ -1371,30 +1337,28 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   .header-action-btn { padding: 5px 7px; }
   .header-avatar-group { display: none; }
 
-  /* Title bar */
+  
   .ticket-detail-titlebar { flex-wrap: nowrap; }
   .ticket-detail-title { max-width: 150px; font-size: 13px; }
   .ticket-detail-id { display: none; }
 
-  /* Messages */
+  
   .ticket-detail-messages { padding: 12px; }
   .message-content { padding-left: 0; margin-top: 8px; }
   .message-attachments { padding-left: 0; }
 
-  /* Input */
+  
   .input-hint { display: none; }
   .message-input-toolbar { display: none; }
   .message-input-form { padding: 8px 12px 10px; }
 
-  /* Modal */
+  
   .invite-form-row { flex-direction: column; }
   .invite-role-select { width: 100%; }
   .modal-box { padding: 20px; }
 }
 
-/* ============================================================
-   RESPONSIVE — SMALL MOBILE (≤ 480px)
-   ============================================================ */
+
 @media (max-width: 480px) {
   .message-card-actions { flex-direction: column; align-items: flex-end; gap: 2px; }
   .header-dropdown-wrapper:last-of-type { display: none; }
@@ -1402,9 +1366,7 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
   .ticket-detail-title { max-width: 120px; }
 }
 
-/* ============================================================
-   RESPONSIVE — LARGE DESKTOP (≥ 1400px)
-   ============================================================ */
+
 @media (min-width: 1400px) {
   :root {
     --ticket-list-w: 300px;

@@ -32,9 +32,9 @@ const TicketDetail = ({ ticket, onAddMessage, onBack, onDeleteTicket, onUpdateTi
   const handleSendMessage = text => {
     const newMessage = {
       id: Date.now(),
-      author: 'Danny Amacher',
-      email: 'danny@capacity.com',
-      avatar: 'DA',
+      author: 'Priya Sharma',
+      email: 'priya@capacity.com',
+      avatar: 'PS',
       avatarColor: '#5B8EF0',
       to: `${ticket.customer} <${ticket.email}>`,
       content: text,
@@ -89,12 +89,9 @@ const TicketDetail = ({ ticket, onAddMessage, onBack, onDeleteTicket, onUpdateTi
 
   return (
     <div className="ticket-detail">
-      {/* Main conversation area */}
       <div className="ticket-detail-main">
-        {/* Title bar */}
         <div className="ticket-detail-titlebar">
           <div className="ticket-detail-title-left">
-            {/* Back button on mobile */}
             <button className="ticket-back-btn" onClick={onBack} aria-label="Back to list">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="15 18 9 12 15 6"/>
@@ -102,7 +99,6 @@ const TicketDetail = ({ ticket, onAddMessage, onBack, onDeleteTicket, onUpdateTi
             </button>
             <h2 className="ticket-detail-title">{ticket.title}</h2>
             <span className="ticket-detail-id">{ticket.ticketId}</span>
-            {/* Status badge — clickable */}
             <div className="td-status-wrapper">
               <button
                 className={`badge ${currentStatus.className} td-status-btn`}
@@ -150,21 +146,17 @@ const TicketDetail = ({ ticket, onAddMessage, onBack, onDeleteTicket, onUpdateTi
           </div>
         </div>
 
-        {/* Messages */}
         <div className="ticket-detail-messages">
           <MessageList messages={ticket.messages} activeTab={activeTab} />
         </div>
 
-        {/* Reply area */}
         <div className="ticket-detail-reply">
           <MessageTabs activeTab={activeTab} onTabChange={setActiveTab} />
           <MessageInput onSendMessage={handleSendMessage} isPrivate={activeTab === 'private'} />
         </div>
       </div>
 
-      {/* Right properties panel */}
       <aside className="ticket-detail-sidebar">
-        {/* Ticket Type */}
         <div className="props-section">
           <label className="props-label">Ticket Type</label>
           <div className="props-select-wrapper">
@@ -202,7 +194,6 @@ const TicketDetail = ({ ticket, onAddMessage, onBack, onDeleteTicket, onUpdateTi
           </div>
         </div>
 
-        {/* Due Date */}
         <div className="props-section">
           <label className="props-label">Due Date</label>
           <div className="props-date-wrapper">
@@ -220,7 +211,6 @@ const TicketDetail = ({ ticket, onAddMessage, onBack, onDeleteTicket, onUpdateTi
           </div>
         </div>
 
-        {/* Reporter */}
         <div className="props-section">
           <label className="props-label">Reporter</label>
           <div className="props-reporter">
@@ -231,7 +221,6 @@ const TicketDetail = ({ ticket, onAddMessage, onBack, onDeleteTicket, onUpdateTi
           </div>
         </div>
 
-        {/* Tags */}
         <div className="props-section">
           <label className="props-label">Tags</label>
           <div className="props-tags">
@@ -263,7 +252,6 @@ const TicketDetail = ({ ticket, onAddMessage, onBack, onDeleteTicket, onUpdateTi
 
         <div className="props-divider" />
 
-        {/* Accordion sections */}
         {[
           { key: 'tasks', label: 'TASKS', count: null,
             content: <p className="props-accordion-empty">No tasks added yet.</p> },
@@ -332,7 +320,6 @@ const TicketDetail = ({ ticket, onAddMessage, onBack, onDeleteTicket, onUpdateTi
         ))}
       </aside>
 
-      {/* Delete confirmation modal */}
       {showDeleteConfirm && (
         <div className="modal-overlay" onClick={() => setShowDeleteConfirm(false)}>
           <div className="modal-box" onClick={e => e.stopPropagation()}>

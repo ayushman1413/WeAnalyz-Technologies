@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const TEAM_MEMBERS = [
-  { initials: 'AH', name: 'Allie Harmon', email: 'allie@capacity.com', color: '#E8834A', role: 'Admin' },
-  { initials: 'SJ', name: 'Sarah Johnson', email: 'sarah@capacity.com', color: '#6C5CE7', role: 'Agent' },
-  { initials: 'MC', name: 'Mike Chen', email: 'mike@capacity.com', color: '#00B894', role: 'Agent' },
-  { initials: 'DA', name: 'Danny Amacher', email: 'danny@capacity.com', color: '#5B8EF0', role: 'Admin' },
+  { initials: 'NG', name: 'Neha Gupta', email: 'neha@capacity.com', color: '#E8834A', role: 'Admin' },
+  { initials: 'RM', name: 'Riya Mehta', email: 'riya@capacity.com', color: '#6C5CE7', role: 'Agent' },
+  { initials: 'AP', name: 'Arjun Patel', email: 'arjun@capacity.com', color: '#00B894', role: 'Agent' },
+  { initials: 'PS', name: 'Priya Sharma', email: 'priya@capacity.com', color: '#5B8EF0', role: 'Admin' },
 ];
 
 const InviteModal = ({ onClose }) => {
@@ -35,7 +35,6 @@ const InviteModal = ({ onClose }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-box modal-box--invite" onClick={e => e.stopPropagation()}>
-        {/* Header */}
         <div className="modal-header">
           <div>
             <h3 className="modal-title">Invite Team Members</h3>
@@ -48,7 +47,6 @@ const InviteModal = ({ onClose }) => {
           </button>
         </div>
 
-        {/* Invite form */}
         <form onSubmit={handleSend} className="invite-form">
           <div className="invite-form-row">
             <div className="invite-input-wrapper">
@@ -94,7 +92,6 @@ const InviteModal = ({ onClose }) => {
           </button>
         </form>
 
-        {/* Current team */}
         <div className="invite-team-section">
           <p className="invite-team-label">Current Team ({TEAM_MEMBERS.length})</p>
           <div className="invite-team-list">
