@@ -1373,3 +1373,25 @@ input, textarea, select { font-family: var(--font); font-size: 13px; }
     --props-panel-w: 270px;
   }
 }
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0 8px;
+  }
+  .header-search {
+    padding: 5px 8px;
+  }
+  .header-action-btn, .header-invite-btn {
+    padding: 5px 6px;
+  }
+  .ticket-detail-title {
+    font-size: 13px;
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-left { gap: 6px; }
+  .header-right { gap: 4px; }
+  .ticket-detail-title { max-width: 110px; }
+}
