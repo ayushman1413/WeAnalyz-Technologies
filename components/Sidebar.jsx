@@ -92,6 +92,7 @@ const Sidebar = ({ sidebarOpen, onClose }) => {
   );
 };
 
+
 const SidebarContent = ({ activeItem, onSetActive, mobile }) => (
   <>
     <div className="sidebar-logo" title="Capacity Help">
@@ -118,6 +119,7 @@ const SidebarContent = ({ activeItem, onSetActive, mobile }) => (
         </button>
       ))}
     </nav>
+    
 
     <div className="sidebar-bottom">
       <button className="sidebar-nav-item" title="Settings">
