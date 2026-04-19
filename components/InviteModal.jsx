@@ -7,6 +7,7 @@ const TEAM_MEMBERS = [
   { initials: 'PS', name: 'Priya Sharma', email: 'priya@capacity.com', color: '#5B8EF0', role: 'Admin' },
 ];
 
+
 const InviteModal = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('Agent');
