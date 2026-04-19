@@ -10,9 +10,6 @@ export const ResponsiveProvider = ({ children }) => {
     return 1024;
   });
 
-
-
-  
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
