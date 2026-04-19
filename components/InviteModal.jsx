@@ -113,4 +113,5 @@ const InviteModal = ({ onClose }) => {
   );
 };
 
+
 export default InviteModal;
