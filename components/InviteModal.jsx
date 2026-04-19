@@ -113,9 +113,4 @@ const InviteModal = ({ onClose }) => {
   );
 };
 
-
-
 export default InviteModal;
-git add .
-git commit -m"update"
-git push
